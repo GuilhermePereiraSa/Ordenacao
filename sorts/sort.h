@@ -8,14 +8,10 @@
     void shellSort(int arr[], int n);
     void countingSmaller(int arr[], int n);
 
-    void merge(int arr[], int l, int m, int r);
     void mergeSort(int arr[], int l, int r);
 
-    void heapify(int arr[], int n, int i);
     void heapSort(int arr[], int n);
 
-    int getMax(int arr[], int n);
-    void countingSortForRadix(int arr[], int n, int exp);
     void radixSort(int arr[], int n);   
 
 #endif
