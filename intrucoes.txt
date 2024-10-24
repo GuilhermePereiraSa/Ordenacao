@@ -1,0 +1,13 @@
+    Usei a pasta "tests" como pai das pastas com cada tipo, e apenas coloquei
+uma funcionalidade descrita abaixo para preencher um arquivo .txt com o número
+de valores desejados.
+    Foi usado um "gerador" de vetor de inteiros para cada caso:
+*generate_ordered.c
+*generate_random.c
+*generate_reversed.c
+
+    Assim, quando cada .txt específico, como no caso, da "pasta" de ordendados 
+tem o seu de 100 inteiros, e os outros casos, preenchemos com o "generate_ordered" 
+diretamente, apenas o executando com o Makefile. Para dar "flush" nos arquivos .txt é
+melhor só excluí-los com:   rm -f *.txt     dentro de cada tipo.
+
