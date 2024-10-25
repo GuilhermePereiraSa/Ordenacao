@@ -36,31 +36,53 @@ void bubblesort_aprimorado(int v[], int n, int *comparisons) {
   }
 }
 
-// QuickSort
+// Funções do QuickSort
+
+int medianaDeTres(int arr[], int low, int high) {
+  int mid = low + (high - low) / 2;
+  if (arr[low] > arr[mid])
+    swap(&arr[low], &arr[mid]);
+  if (arr[low] > arr[high])
+    swap(&arr[low], &arr[high]);
+  if (arr[mid] > arr[high])
+    swap(&arr[mid], &arr[high]);
+  return mid; // Retorna o índice do pivô
+}
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
 void quicksort(int arr[], int low, int high, int *comparisons, int *movements) {
   if (low < high) {
+    int pivotIndex = medianaDeTres(arr, low, high);
+
+    // Move o pivô escolhido para o final da partição
+    swap(&arr[pivotIndex], &arr[high]);
+    (*movements) += 3; // Movimentação do pivô
+
     int pivot = arr[high];
-    (*movements)++; // Movimentação do pivo
-    int i = (low - 1);
+    int i = low - 1;
+
     for (int j = low; j < high; j++) {
       (*comparisons)++; // Comparação de chaves
       if (arr[j] < pivot) {
         i++;
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-        (*movements) += 3; // Swap
+        swap(&arr[i], &arr[j]);
+        (*movements) += 3; // Movimentação do swap
       }
     }
-    int temp = arr[i + 1];
-    arr[i + 1] = arr[high];
-    arr[high] = temp;
-    (*movements) += 3; // Swap
+    swap(&arr[i + 1], &arr[high]);
+    (*movements) += 3; // Movimentação do swap final
+
     int pi = i + 1;
 
     quicksort(arr, low, pi - 1, comparisons, movements);
     quicksort(arr, pi + 1, high, comparisons, movements);
   }
+
   /* Complexidade:
 - Tempo: O(n^2) no pior caso (caso já esteja ordenado); O(n log n) no melhor e
 médio caso
@@ -153,7 +175,7 @@ void countingSmaller(int arr[], int n, int *comparisons) {
   for (int i = 0; i < n; i++) {
     output[i] = 0;
     for (int j = 0; j < n; j++) {
-      if (arr[j] < arr[i]){
+      if (arr[j] < arr[i]) {
         *(comparisons)++;
         output[i]++;
       }
@@ -279,7 +301,7 @@ void heapSort(int arr[], int n, int *comparisons, int *movements) {
 int getMax(int arr[], int n, int *comparisons) {
   int max = arr[0];
   for (int i = 1; i < n; i++)
-    if (arr[i] > max){
+    if (arr[i] > max) {
       max = arr[i];
       *(comparisons)++;
     }
@@ -316,9 +338,8 @@ void radixSort(int arr[], int n, int *comparisons, int *movements) {
 
   for (int exp = 1; max / exp > 0; exp *= 10)
     countingSortForRadix(arr, n, exp, comparisons, movements);
-}
-
-/* Complexidade:
+  /* Complexidade:
 - Tempo: O(nk), onde k é o número de dígitos no maior número
 - Espaço: O(n) (para o array de saída)
 */
+}
