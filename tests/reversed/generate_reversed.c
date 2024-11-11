@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 // Função para gerar vetores de tamanho n 
 void generate_reversed(int n, const char* filename) {
