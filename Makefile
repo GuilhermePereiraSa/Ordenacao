@@ -1,6 +1,10 @@
-all:
-	gcc -o main -Wall -std=c99 main.c -I /sorts/sort.h
-run: all
+all: main
+
+main: main.c ./sorts/sort.c
+	gcc main.c ./sorts/sort.c -o main -Wall -std=c99 -I./sorts
+
+run: main
 	./main
+
 clean:
 	rm -f main

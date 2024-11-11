@@ -88,8 +88,8 @@ int main() {
   int comparisons, movements;
 
   // Diretórios e tamanhos de vetores
-  const char *diretorios[] = {"tests/ordered/", "tests/random/",
-                              "tests/reversed/"};
+  const char *diretorios[] = {"./tests/ordered/", "./tests/random/",
+                              "./tests/reversed/"};
   const char *arquivos[] = {"vector_100.txt", "vector_1000.txt",
                             "vector_10000.txt", "vector_100000.txt"};
 

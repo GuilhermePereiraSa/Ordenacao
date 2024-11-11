@@ -3,12 +3,12 @@
 #include <stdio.h>
 
 // Protocolo das Funções
-void bubblesort_aprimorado(int v[], int n, int *comparisons);
+void bubblesort_aprimorado(int v[], int n, int *comparisons, int *movements);
 void quicksort(int arr[], int low, int high, int *comparisons, int *movements);
 void selectionSort(int arr[], int n, int *comparisons, int *movements);
 void insertionSort(int arr[], int n, int *comparisons, int *movements);
 void shellSort(int arr[], int n, int *comparisons, int *movements);
-void countingSmaller(int arr[], int n, int *comparisons);
+void countingSmaller(int arr[], int n, int *comparisons, int *movements);
 
 void merge(int arr[], int l, int m, int r, int *comparisons, int *movements);
 void mergeSort(int arr[], int l, int r, int *comparisons, int *movements);
@@ -20,19 +20,18 @@ void countingSortForRadix(int arr[], int n, int exp, int *comparisons,
                           int *movements);
 void radixSort(int arr[], int n, int *comparisons, int *movements);
 
-// BubbleSort
-void bubblesort_aprimorado(int v[], int n, int *comparisons) {
-  int i, j, aux, troca = 1;
-  for (i = 0; i < n && troca; i++) {
-    troca = 0;
-    for (j = 0; j < n - i - 1; j++)
-      if (v[j] > v[j + 1]) {
-        *(comparisons)++;
-        troca = 1;
-        aux = v[j];
-        v[j] = v[j + 1];
-        v[j + 1] = aux;
+void swap(int *a, int *b);
+
+// Função do BubbleSort
+void bubblesort_aprimorado(int arr[], int n, int *comparisons, int *movements) {
+  for (int i = 0; i < n - 1; i++) {
+    for (int j = 0; j < n - i - 1; j++) {
+      (*comparisons)++;
+      if (arr[j] > arr[j + 1]) {
+        swap(&arr[j], &arr[j + 1]);
+        (*movements)++;
       }
+    }
   }
 }
 
@@ -49,10 +48,11 @@ int medianaDeTres(int arr[], int low, int high) {
   return mid; // Retorna o índice do pivô
 }
 
+// Implementação da função swap
 void swap(int *a, int *b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+  int temp = *a;
+  *a = *b;
+  *b = temp;
 }
 
 void quicksort(int arr[], int low, int high, int *comparisons, int *movements) {
@@ -170,20 +170,34 @@ void shellSort(int arr[], int n, int *comparisons, int *movements) {
 }
 
 // Função do Contagem de Menores
-void countingSmaller(int arr[], int n, int *comparisons) {
+void countingSmaller(int arr[], int n, int *comparisons, int *movements) {
   int output[n];
+
+  // Inicializa o vetor de contagem com 0
   for (int i = 0; i < n; i++) {
     output[i] = 0;
+  }
+
+  // Compara cada elemento com os outros para contar quantos são menores
+  for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j++) {
+      (*comparisons)++;
       if (arr[j] < arr[i]) {
-        *(comparisons)++;
         output[i]++;
       }
     }
   }
 
-  for (int i = 0; i < n; i++)
+  // Atualiza o vetor original com os resultados
+  for (int i = 0; i < n; i++) {
     arr[i] = output[i];
+    (*movements)++;
+  }
+
+  /* Complexidade:
+- Tempo: O(n^2) no pior caso
+- Espaço: O(n) (vetor auxiliar 'output')
+*/
 }
 
 // Funções para o MergeSort
@@ -300,11 +314,12 @@ void heapSort(int arr[], int n, int *comparisons, int *movements) {
 // Funções para o RadixSort
 int getMax(int arr[], int n, int *comparisons) {
   int max = arr[0];
-  for (int i = 1; i < n; i++)
+  for (int i = 1; i < n; i++) {
+    (*comparisons)++;
     if (arr[i] > max) {
       max = arr[i];
-      *(comparisons)++;
     }
+  }
   return max;
 }
 
