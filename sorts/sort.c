@@ -25,15 +25,21 @@ void swap(int *a, int *b);
 // Função do BubbleSort
 void bubblesort_aprimorado(int arr[], int n, int *comparisons, int *movements) {
   for (int i = 0; i < n - 1; i++) {
+    bool troca_ocorrida = false; // Inicializa o indicador de troca
     for (int j = 0; j < n - i - 1; j++) {
       (*comparisons)++;
       if (arr[j] > arr[j + 1]) {
         swap(&arr[j], &arr[j + 1]);
         (*movements)++;
+        troca_ocorrida = true; // Marca que houve troca
       }
+    }
+    if (!troca_ocorrida) {
+      break; // Interrompe se nenhuma troca ocorreu
     }
   }
 }
+
 
 // Funções do QuickSort
 
